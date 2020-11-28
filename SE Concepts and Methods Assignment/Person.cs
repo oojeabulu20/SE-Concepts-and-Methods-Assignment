@@ -38,9 +38,14 @@ namespace SE_Concepts_and_Methods_Assignment
             Meeting meet = new Meeting(meetDate, notif.getInvitees(), notif.getRequire(), notif.getLocation());
             
         }
-        public void denyInvite()
+        public void denyInvite(MeetingNotification id)
         {
-
+            
+                
+                    meetingInvite.Remove(id);
+                    
+                
+            
         }
         public int getID()
         {

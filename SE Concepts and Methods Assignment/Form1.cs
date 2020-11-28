@@ -231,16 +231,29 @@ namespace SE_Concepts_and_Methods_Assignment
         {
             foreach (Person person in personDic.Values)
             {
+                int x = 0;
                 if (person.getStatus() == true)
                 {
-                    foreach (MeetingNotification notifi in person.getInvitesList())
+                    for (int i = 0; i < person.getInvitesList().Count; i++)
                     {
-                        if (notifi.getTopic() == inviteSelector.SelectedItem.ToString())
+                        if (person.getInvitesList()[i].getTopic() == inviteSelector.SelectedItem.ToString())
                         {
-                            
-                            
+                            inviteSelector.Items.RemoveAt(i);
+                            showDates.Items.Clear();
+                            person.denyInvite(person.getInvitesList()[i]);
                         }
                     }
+                    //foreach (MeetingNotification notifi in person.getInvitesList())
+                    //{
+                    //    if (notifi.getTopic() == inviteSelector.SelectedItem.ToString())
+                    //    {
+                    //        inviteSelector.Items.Remove(notifi.getTopic());
+                    //        showDates.Items.Clear();
+                    //        person.denyInvite(notifi);
+                            
+                    //    }
+                    //    x++;
+                    //}
 
                 }
             }
