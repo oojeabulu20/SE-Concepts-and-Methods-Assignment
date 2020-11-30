@@ -14,8 +14,10 @@ namespace SE_Concepts_and_Methods_Assignment
     {
         private int ID = 1;
         private int inviteID = 0;
+        private int meetingID = 0;
         Dictionary<int, object> personDic = new Dictionary<int, object>();
         Dictionary<int, object> inviteDic = new Dictionary<int, object>();
+        Dictionary<int, object> meetingDic = new Dictionary<int, object>();
         Person login = new Person(0, "test", "test", 1);
         Person Dave = new Person(1, "Dave", "test", 1);
         Person John = new Person(2, "John", "test", 1);
@@ -24,6 +26,8 @@ namespace SE_Concepts_and_Methods_Assignment
         public void showOptions()
         {
             btnSetPrefferences.Visible = true;
+            btnShowInvites.Visible = true;
+            showMeetings.Visible = true;
         }
         public void clearLoginPage()
         {
@@ -96,6 +100,7 @@ namespace SE_Concepts_and_Methods_Assignment
 
         private void btnSetPrefferences_Click(object sender, EventArgs e)
         {
+            chckBoxShowPeople.Items.Clear();
             grpBoxDates.Visible = true;
             dateTimePicker1.Visible = true;
             dateTimePicker2.Visible = true;
@@ -219,7 +224,13 @@ namespace SE_Concepts_and_Methods_Assignment
                         if (notifi.getTopic() == inviteSelector.SelectedItem.ToString())
                         {
                             Meeting meet = new Meeting(showDates.SelectedItem.ToString(), notifi.getInvitees(), notifi.getRequire(), notifi.getLocation());
+                            meetingDic.Add(meetingID, meet);
+                            meetingID++;
                             person.addInviteToList(meet);
+                            showDates.Visible = false;
+                            inviteSelector.Visible = false;
+                            acceptInvite.Visible = false;
+                            DenyInvite.Visible = false;
                         }
                     }
                     
@@ -231,7 +242,6 @@ namespace SE_Concepts_and_Methods_Assignment
         {
             foreach (Person person in personDic.Values)
             {
-                int x = 0;
                 if (person.getStatus() == true)
                 {
                     for (int i = 0; i < person.getInvitesList().Count; i++)
@@ -243,18 +253,24 @@ namespace SE_Concepts_and_Methods_Assignment
                             person.denyInvite(person.getInvitesList()[i]);
                         }
                     }
-                    //foreach (MeetingNotification notifi in person.getInvitesList())
-                    //{
-                    //    if (notifi.getTopic() == inviteSelector.SelectedItem.ToString())
-                    //    {
-                    //        inviteSelector.Items.Remove(notifi.getTopic());
-                    //        showDates.Items.Clear();
-                    //        person.denyInvite(notifi);
-                            
-                    //    }
-                    //    x++;
-                    //}
+                }
+            }
+        }
 
+        private void showMeetings_Click(object sender, EventArgs e)
+        {
+            showAccepted.Visible = true;
+            foreach (Person person in personDic.Values)
+            {
+
+                if(person.getStatus() == true)
+                {
+
+                
+                    foreach (Meeting meet in meetingDic.Values)
+                    {
+                        showAccepted.Items.Add(meet.getTopic() + " " + meet.getDate() + " " + meet.getLocation());
+                    }
                 }
             }
         }

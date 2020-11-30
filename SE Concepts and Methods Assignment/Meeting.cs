@@ -25,5 +25,27 @@ namespace SE_Concepts_and_Methods_Assignment
             this.specialRequirements = requirements;
             this.loc = location;
         }
+
+        // Functions
+        public string getDate()
+        {
+            return this.meetingDate;
+        }
+        public List<string> getAttendees()
+        {
+            return this.Attendees;
+        }
+        public string getRequirements()
+        {
+            return this.specialRequirements;
+        }
+        public string getLocation()
+        {
+            return this.loc;
+        }
+        public string getTopic()
+        {
+            return this.topic;
+        }
     }
 }
