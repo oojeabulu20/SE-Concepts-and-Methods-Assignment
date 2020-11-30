@@ -27,6 +27,7 @@ namespace SE_Concepts_and_Methods_Assignment
         {
             btnSetPrefferences.Visible = true;
             btnShowInvites.Visible = true;
+            btnLogout.Visible = true;
             showMeetings.Visible = true;
         }
         public void clearLoginPage()
@@ -102,6 +103,7 @@ namespace SE_Concepts_and_Methods_Assignment
         {
             chckBoxShowPeople.Items.Clear();
             grpBoxDates.Visible = true;
+            grpBoxMeetingDetails.Visible = true;
             dateTimePicker1.Visible = true;
             dateTimePicker2.Visible = true;
             dateTimePicker3.Visible = true;
@@ -161,6 +163,7 @@ namespace SE_Concepts_and_Methods_Assignment
             grpBoxDates.Visible = false;
             txtBxEnterBuilding.Visible = false;
             txtBxEnterRoom.Visible = false;
+            grpBoxMeetingDetails.Visible = false;
             txtBxEnterRequire.Visible = false;
             lblEnterLocation.Visible = false;
             btnDateSubmission.Visible = false;
@@ -179,6 +182,7 @@ namespace SE_Concepts_and_Methods_Assignment
             showDates.Visible = true;
             acceptInvite.Visible = true;
             DenyInvite.Visible = true;
+            grpBoxInvites.Visible = true;
 
             foreach (Person person in personDic.Values)
             {
@@ -270,7 +274,69 @@ namespace SE_Concepts_and_Methods_Assignment
                     foreach (Meeting meet in meetingDic.Values)
                     {
                         showAccepted.Items.Add(meet.getTopic() + " " + meet.getDate() + " " + meet.getLocation());
+                        showAttendees.Items.Clear();
+                        foreach (string name in meet.getAttendees())
+                        {
+                            showAttendees.Items.Add(name);
+                        }
                     }
+                }
+            }
+        }
+
+        public void goToLogin()
+        {
+            inviteSelector.Visible = false;
+            showDates.Visible = false;
+            acceptInvite.Visible = false;
+            DenyInvite.Visible = false;
+            lblEnterLocation.Visible = false;
+            roomName.Visible = false;
+            buildingName.Visible = false;
+            meetingTopic.Visible = false;
+            lblRequirements.Visible = false;
+            txtBxEnterRoom.Visible = false;
+            txtBxEnterBuilding.Visible = false;
+            txtBxMeetingTopic.Visible = false;
+            txtBxEnterRequire.Visible = false;
+            chckBoxShowPeople.Visible = false;
+            showAccepted.Visible = false;
+            showAttendees.Visible = false;
+            grpBoxDates.Visible = false;
+            dateTimePicker1.Visible = false;
+            dateTimePicker2.Visible = false;
+            dateTimePicker3.Visible = false;
+            dateTimePicker4.Visible = false;
+            btnSetPrefferences.Visible = false;
+            btnDateSubmission.Visible = false;
+            btnShowInvites.Visible = false;
+            showMeetings.Visible = false;
+            grpBxLogin.Visible = true;
+            UserNameInput.Visible = true;
+            label4.Visible = true;
+            label5.Visible = true;
+            PasswordInput.Visible = true;
+            button1.Visible = true;
+            accoutCreate.Visible = true;
+            txtCreateUser.Visible = true;
+            txtCreatePass.Visible = true;
+            txtCreateAccess.Visible = true;
+            label1.Visible = true;
+            label2.Visible = true;
+            label3.Visible = true;
+            button2.Visible = true;
+            grpBoxInvites.Visible = false;
+            grpBoxMeetingDetails.Visible = false;
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            goToLogin();
+            foreach (Person person in personDic.Values)
+            {
+                if (person.getStatus() == true)
+                {
+                    person.logOut();
                 }
             }
         }
