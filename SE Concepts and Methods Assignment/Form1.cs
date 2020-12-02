@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+
 
 namespace SE_Concepts_and_Methods_Assignment
 {
@@ -39,6 +41,82 @@ namespace SE_Concepts_and_Methods_Assignment
         public Form1()
         {
             InitializeComponent();
+        }
+        public void flushCSVData()
+        {
+            System.IO.File.Delete(@".\\users.csv");
+            System.IO.File.Delete(@".\\meetings.csv");
+            System.IO.File.Delete(@".\\meetingInvites.csv");
+            string strFilePath = @".\\meetings.csv";
+            string strFilePath2 = @".\\meetingInvites.csv";
+            string strFilePath3 = @".\\users.csv";
+            string strSeparator = "/";
+            StringBuilder output = new StringBuilder();
+
+            //
+
+            //
+            
+            File.WriteAllText(strFilePath, output.ToString());
+            File.WriteAllText(strFilePath2, output.ToString());
+            File.WriteAllText(strFilePath3, output.ToString());
+        }
+
+        public void writeMeetingCSV()
+        {
+            string strFilePath = @".\\meeting.csv";
+            string strSeperator = "/";
+            StringBuilder sbOutput = new StringBuilder();
+
+
+            foreach (Meeting meet in meetingDic.Values)
+            {
+                string attendees = "";
+                foreach (string name in meet.getAttendees())
+                {
+                    attendees +=  name + ", ";
+                }
+
+
+
+
+                string inaOutput = (meet.getDate(), attendees , meet.getRequirements(), meet.getLocation(), meet.getTopic() + "/").ToString();
+
+                int ilength = inaOutput.Length;
+
+                //for (int i = 0; i &amp; lt; inaOutput.Length; i++)
+                //{
+                //    sbOutput.AppendLine(string.Join(strSeperator, inaOutput[i]));
+                //}
+                
+
+
+                File.AppendAllText(strFilePath, sbOutput.ToString());
+            }
+            
+        }
+
+        public void writeUserData()
+        {
+            string strFilePath = @".\\users.csv";
+            string strSeperator = "/";
+            StringBuilder sbOutput = new StringBuilder();
+
+
+
+            foreach (Person person in personDic.Values)
+            {
+                string inviteList = "";
+                foreach (var item in person.getInvitesList())
+                {
+
+                }
+                string sbOutput = (person.getID() +  person.getUser() + person.getPass()
+
+                File.AppendAllText(strFilePath, sbOutput.ToString());
+            }
+
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -235,6 +313,7 @@ namespace SE_Concepts_and_Methods_Assignment
                             inviteSelector.Visible = false;
                             acceptInvite.Visible = false;
                             DenyInvite.Visible = false;
+                            grpBoxInvites.Visible = false;
                         }
                     }
                     
@@ -255,6 +334,11 @@ namespace SE_Concepts_and_Methods_Assignment
                             inviteSelector.Items.RemoveAt(i);
                             showDates.Items.Clear();
                             person.denyInvite(person.getInvitesList()[i]);
+                            grpBoxInvites.Visible = false;
+                            DenyInvite.Visible = false;
+                            acceptInvite.Visible = false;
+                            showDates.Visible = false;
+                            inviteSelector.Visible = false;
                         }
                     }
                 }
@@ -264,6 +348,7 @@ namespace SE_Concepts_and_Methods_Assignment
         private void showMeetings_Click(object sender, EventArgs e)
         {
             showAccepted.Visible = true;
+            showAttendees.Visible = true;
             foreach (Person person in personDic.Values)
             {
 
@@ -339,6 +424,11 @@ namespace SE_Concepts_and_Methods_Assignment
                     person.logOut();
                 }
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            writeMeetingCSV();
         }
     }
 }
