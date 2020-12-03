@@ -33,11 +33,12 @@ namespace SE_Concepts_and_Methods_Assignment
         {
             acceptedMeetings.Add(accepted);
         }
-        public void acceptInvite(MeetingNotification notif, string meetDate)
-        {
-            Meeting meet = new Meeting(meetDate, notif.getInvitees(), notif.getRequire(), notif.getLocation());
+        //public void acceptInvite(MeetingNotification notif, string meetDate)
+        //{
+
+        //    Meeting meet = new Meeting(meetDate, notif.getInvitees(), notif.getRequire(), notif.getLocation());
             
-        }
+        //}
         public void denyInvite(MeetingNotification id)
         {
             
@@ -86,6 +87,10 @@ namespace SE_Concepts_and_Methods_Assignment
         public List<MeetingNotification> getInvitesList()
         {
             return this.meetingInvite;
+        }
+        public List<Meeting> getAcceptedMeetings()
+        {
+            return this.acceptedMeetings;
         }
         public void logIn()
         {

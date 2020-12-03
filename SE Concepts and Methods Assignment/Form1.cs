@@ -14,7 +14,7 @@ namespace SE_Concepts_and_Methods_Assignment
 {
     public partial class Form1 : Form
     {
-        private int ID = 1;
+        private int personID = 1;
         private int inviteID = 0;
         private int meetingID = 0;
         Dictionary<int, object> personDic = new Dictionary<int, object>();
@@ -100,20 +100,28 @@ namespace SE_Concepts_and_Methods_Assignment
         {
             string strFilePath = @".\\users.csv";
             string strSeperator = "/";
-            StringBuilder sbOutput = new StringBuilder();
+            StringBuilder userOutput = new StringBuilder();
+            //string Output = ("test"+ "build").ToString();
 
-
-
+            
             foreach (Person person in personDic.Values)
             {
                 string inviteList = "";
-                foreach (var item in person.getInvitesList())
+                string acceptedList = "";
+                foreach (MeetingNotification notif in person.getInvitesList())
                 {
-
+                    inviteList += notif.getID() + ", ";
                 }
-                string sbOutput = (person.getID() +  person.getUser() + person.getPass()
+                foreach (Meeting meet in person.getAcceptedMeetings())
+                {
+                    acceptedList += meet.getID() + ", ";
+                }
+                string Output = (person.getID() + person.getUser() + person.getPass());
 
-                File.AppendAllText(strFilePath, sbOutput.ToString());
+                using (StreamWriter outputFile = new StreamWriter(strFilePath))
+                {
+                    outputFile.WriteLine(Output);
+                }
             }
 
 
@@ -161,7 +169,7 @@ namespace SE_Concepts_and_Methods_Assignment
             string name = txtCreateUser.Text;
             string pass = txtCreatePass.Text;
             int LOA = int.Parse(txtCreateAccess.Text);
-            Person Alpha = new Person(ID, name, pass, LOA);
+            Person Alpha = new Person(personID, name, pass, LOA);
             if (Alpha != null)
             {
                 Welcome.Text = "Account created successfully!";
@@ -169,10 +177,10 @@ namespace SE_Concepts_and_Methods_Assignment
                 txtCreateUser.Text = "";
                 txtCreateAccess.Text = "";
             }
-            personDic.Add(ID, Alpha);
+            personDic.Add(personID, Alpha);
 
 
-            ID++;
+            personID++;
         }
 
         
@@ -305,7 +313,7 @@ namespace SE_Concepts_and_Methods_Assignment
                     {
                         if (notifi.getTopic() == inviteSelector.SelectedItem.ToString())
                         {
-                            Meeting meet = new Meeting(showDates.SelectedItem.ToString(), notifi.getInvitees(), notifi.getRequire(), notifi.getLocation());
+                            Meeting meet = new Meeting(meetingID, showDates.SelectedItem.ToString(), notifi.getInvitees(), notifi.getRequire(), notifi.getLocation());
                             meetingDic.Add(meetingID, meet);
                             meetingID++;
                             person.addInviteToList(meet);
@@ -428,7 +436,12 @@ namespace SE_Concepts_and_Methods_Assignment
 
         private void button3_Click(object sender, EventArgs e)
         {
-            writeMeetingCSV();
+            writeUserData();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            flushCSVData();
         }
     }
 }

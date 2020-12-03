@@ -9,6 +9,7 @@ namespace SE_Concepts_and_Methods_Assignment
     class Meeting
     {
         // Properties
+        private int id;
         private string meetingDate;
         private List<string> Attendees;
         private string specialRequirements;
@@ -18,8 +19,9 @@ namespace SE_Concepts_and_Methods_Assignment
         private string loc;
 
         // Constructor 
-        public Meeting(string meetTime, List<string> attendents, string requirements, string location)
+        public Meeting(int ID, string meetTime, List<string> attendents, string requirements, string location)
         {
+            this.id = ID;
             this.meetingDate = meetTime;
             this.Attendees = attendents;
             this.specialRequirements = requirements;
@@ -27,6 +29,10 @@ namespace SE_Concepts_and_Methods_Assignment
         }
 
         // Functions
+        public int getID()
+        {
+            return this.id;
+        }
         public string getDate()
         {
             return this.meetingDate;

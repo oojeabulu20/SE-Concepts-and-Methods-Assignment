@@ -9,6 +9,7 @@ namespace SE_Concepts_and_Methods_Assignment
     class MeetingNotification
     {
         // Attributes
+        private int id;
         private string topic;
         private List<DateTime> suggestedTimes;
         private List<string> invitees;
@@ -25,6 +26,10 @@ namespace SE_Concepts_and_Methods_Assignment
         }
 
         // Functions
+        public int getID()
+        {
+            return this.id;
+        }
         public List<DateTime> getTimes()
         {
             return this.suggestedTimes;
